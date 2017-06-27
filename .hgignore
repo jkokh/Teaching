@@ -1,0 +1,13 @@
+syntax: regexp
+
+#Common ignores
+\.DS_Store$
+^\.git$
+^\.idea/
+^local/
+^files/(?!.dir|Teaching).+
+^files/Teaching/uploads/(?!.dir|Users|Streams).+
+^files/Teaching/uploads/Users/(?!.dir).+
+^files/Teaching/uploads/Streams/(?!.dir).+
+^web/uploads
+^web/plugins

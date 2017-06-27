@@ -1,0 +1,172 @@
+{
+	"Q": {
+		"app": "Teaching",
+		"appInfo" : {
+			"version" : "0.1",
+			"compatible": "0.1",
+			"requires": {
+				"Q": "0.9",
+				"Users": "0.9.3",
+				"Streams": "0.9"
+			},
+			"recognizes": {
+				"Q": "0.8",
+				"Users": "0.9.3",
+				"Streams": "0.9"
+			},
+			"connections": []
+		},
+		"plugins": ["Users", "Streams"],
+		"handlersBeforeEvent": {
+			"Q/responseExtras": ["Teaching/before/Q_responseExtras"]
+		},
+		"handlersAfterEvent": {
+			"Q/configure": ["Teaching/after/Q_configure"]
+		},
+		"routes": {
+			"": {"module": "Teaching", "action": "welcome"},
+			":action": {"module": "Teaching"},
+			"facebook/:action": {"module": "Teaching", "facebook": 1}
+		},
+		"response": {
+			"slotNames": ["dashboard", "content", "dialogs", "title", "notices"],
+			"ajax": [],
+			"layout": {
+				"desktop": "Teaching/layout/desktop.php",
+				"tablet": "Teaching/layout/tablet.php",
+				"mobile": "Teaching/layout/mobile.php"
+			},
+			"cacheBaseUrl": "https://teaching.intercept"
+		},
+		"exception": {
+			"showTrace": true,
+			"showFileAndLine": true
+		},
+		"node": {
+			"headers": {
+				"Access-Control-Allow-Origin": "*"
+			}
+		},
+		"web": {
+			"languages": {"en": 1}
+		},
+		"bundle": {
+			"exclude": {
+				"Teaching": [
+					"action.php", "batch.php", "index.php", "fast.php", "Q.inc.php",
+					".htaccess", "uploads"
+				]
+			}
+		},
+		"environments": {
+			"live": {
+				"files": {
+					"plugins/Q/css/Q.css": "all.css",
+					"plugins/Users/css/Users.css": "all.css",
+					"plugins/Streams/css/Streams.css": "all.css",
+					"css/Teaching.css": "all.css",
+					"plugins/Q/js/jquery-1.11.1.min.js": "all.js",
+					"plugins/Q/js/handlebars-v4.0.5.js": "all.js",
+					"plugins/Q/js/Q.js": "all.js",
+					"plugins/Users/js/Users.js": "all.js",
+					"plugins/Streams/js/Streams.js": "all.js",
+					"js/Teaching.js": "all.js"
+				}
+			}
+		}
+	},
+	"Users": {
+		"community": {
+			"id": "Teaching",
+			"name": "Teaching"
+		},
+		"transactional": {
+			"activation": {
+				"subject": "Welcome! Please verify your email address.",
+				"body": "Teaching/email/activation.php",
+				"sms": "Teaching/sms/activation.php"
+			},
+			"identifier": {
+				"subject": "Welcome! Verify your email address.",
+				"body": "Teaching/email/addEmail.php",
+				"sms": "Teaching/sms/addMobile.php"
+			},
+			"resend": {
+				"subject": "Hey, did you forget your passphrase?",
+				"body": "Teaching/email/resend.php",
+				"sms": "Teaching/sms/resend.php"
+			},
+			"authenticated": {
+				"subject": false,
+				"body": false
+			}
+		},
+		"uris": {
+			"Teaching/afterActivate": "Teaching/home"
+		},
+		"login": {
+			"identifierType": "email,mobile"
+		},
+		"authorize": {
+			"clients": {
+				"Teaching-ios": {
+					"paths": null,
+					"scopes": {
+						"all": "give this app full access"
+					},
+					"automatic": true
+				},
+				"Teaching-android": {
+					"paths": null,
+					"scopes": {
+						"all": "give this app full access"
+					},
+					"automatic": true
+				}
+			}
+		}
+	},
+	"Streams": {
+		"possibleUserStreams": {
+			"Streams/user/birthday": true,
+			"Streams/user/gender": true,
+			"Streams/user/height": true
+		},
+		"notifications": {
+			"onlyIfAllClientsOffline": true
+		}
+	},
+	"Assets": {
+		"transactional": {
+			"charge": {
+				"subject": "{{call 'publisher.displayName'}}: charge processed for {{call 'user.displayName'}}",
+				"body": "Teaching/email/charge.php",
+				"sms": "Teaching/sms/charge.php"
+			},
+			"charged": {
+				"subject": "Thank you for your payment to {{call 'publisher.displayName'}}",
+				"body": "Teaching/email/charged.php",
+				"sms": "Teaching/sms/charged.php"
+			},
+			"startSubscription": {
+				"subject": "{{call 'user.displayName'}} subscribed to {{plan.title}}",
+				"body": "Teaching/email/startSubscription.php",
+				"sms": "Teaching/sms/startSubscription.php"
+			},
+			"startedSubscription": {
+				"subject": "You have been subscribed to {{plan.title}}",
+				"body": "Teaching/email/startedSubscription.php",
+				"sms": "Teaching/sms/startedSubscription.php"
+			}
+		}
+	},
+	"Websites": {
+		"seoReload": true,
+		"permalinks": {
+			"routes": {},
+			"actions": {
+				"Teaching": [ /* actions that may get permalinks */ ]
+			}
+		}
+	}
+}

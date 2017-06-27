@@ -1,0 +1,13 @@
+#common ignores
+.DS_Store 
+.hg/
+.idea/
+local/*
+files/*
+!files/Teaching
+files/Teaching/uploads/*/*
+!files/Teaching/uploads/Users/.dir
+!files/Teaching/uploads/Streams/.dir
+web/plugins/*
+web/uploads
+!*.dir
