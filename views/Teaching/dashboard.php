@@ -20,7 +20,7 @@
 			</ul>
 		</div>
 	</div>
-	
+
 	<?php echo Q::tool('Q/tabs', array(
 		'vertical' => !Q_Request::isMobile(),
 		'overflow' => array(
@@ -29,11 +29,13 @@
 		'compact' => true,
 		'tabs' => array(
 			'welcome' => 'Welcome',
-			'about' => 'About'
+			'about' => 'About',
+			'messaging' => 'Messaging'
 		),
 		'urls' => array(
 			'welcome' => 'Teaching/welcome',
-			'about' => 'Teaching/about'
+			'about' => 'Teaching/about',
+			'messaging' => 'Teaching/messaging'
 		)
 	))?>
 </div>
