@@ -24,7 +24,7 @@
 			"Q/configure": ["Teaching/after/Q_configure"]
 		},
 		"routes": {
-			"": {"module": "Teaching", "action": "welcome"},
+			"": {"module": "Teaching", "action": "messaging"},
 			":action": {"module": "Teaching"},
 			"facebook/:action": {"module": "Teaching", "facebook": 1}
 		},
