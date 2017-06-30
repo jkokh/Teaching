@@ -1,0 +1,30 @@
+form {
+    background-color: #dfdfdf;
+    border-radius: 4px;
+    padding: 20px;
+    display: inline-block;
+    min-width: 300px;
+    font-size: 15px;
+}
+
+input[type="text"] {
+    width: 100%;
+    border: 1px solid silver !important;
+    padding: 10px 5px !important;
+    background-color: white;
+    font-size: 15px;
+}
+
+button {
+    padding: 10px 20px;
+    border: none;
+    background-color: steelblue;
+    color: white;
+    font-weight: bold;
+    border-radius: 4px;
+    font-size: 15px;
+}
+
+input[type="text"]:read-only {
+    background-color: #dfdfdf;
+}
