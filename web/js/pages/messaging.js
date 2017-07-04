@@ -3,29 +3,31 @@ Q.page("Teaching/messaging", function () {
 	$("#deviceId").val(deviceId);
 	console.log(deviceId);
 
-
 	// code to execute after page finished loading
 	window.sendNotification = function () {
 		var message = $("#message").val();
-		if (!message) {
-			alert("Please enter the message");
+		var title = $("#title").val();
+		if (!message || !title) {
+			alert("Please enter the message and the title");
 			$("#message").focus();
 		}
 		event.preventDefault();
 		$.ajax({
 			type: "POST",
 			url: 'send_notification.php',
-			data: {message: message, deviceId: deviceId},
-			success: success,
+			data: {message: message, title: title, deviceId: deviceId},
+			success: function() {
+				$("#message").val("");
+				$("#title").val("");
+				alert('data were sent');
+			},
 			dataType: 'json'
 		});
 		return false;
 
 	};
 
-	function success() {
-		alert('data were sent');
-	}
+
 
 	return function () {
 		// code to execute before page starts unloading

@@ -7,7 +7,7 @@ form {
     font-size: 15px;
 }
 
-input[type="text"] {
+input[type="text"], textarea {
     width: 100%;
     border: 1px solid silver !important;
     padding: 10px 5px !important;
@@ -23,6 +23,16 @@ button {
     font-weight: bold;
     border-radius: 4px;
     font-size: 15px;
+    position: relative;
+}
+
+button:active {
+    top: 1px;
+}
+
+button:hover {
+    background-color: #569edc;
+    cursor: pointer;
 }
 
 input[type="text"]:read-only {
