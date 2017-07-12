@@ -11,3 +11,5 @@ files/Teaching/uploads/*/*
 web/plugins/*
 web/uploads
 !*.dir
+
+web/send-notification-curl.txt

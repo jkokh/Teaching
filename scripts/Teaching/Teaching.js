@@ -1,56 +1,31 @@
-var http = require('http');
-require('../Q.inc')(function(Q) {
-	
-	Q.plugins.Users.listen();
-	Q.plugins.Streams.listen();
-	
-	// TODO: Make some classes in classes/Teaching and then require() them
-
-	var Db = require('Db');
-
-	// get community name
-	var commutiny = Q.plugins.Users.communityName();
-
-	// get user from session
-	//Q.plugins.Users.userFromSession('zzzbuyuI5FSVSGKEuOYID6mC16jZledCtSVtFSDc5mMi0zc', function(user) {
-	//	console.log('here');
-	//});
-
-
+require('../Q.inc')(function (Q) {
 
 	Q.plugins.Users.Device.SELECT('*').where({
+		userId: ["vneceymh", "timvukno", "eralrzkp"]
 	}).execute(function (err, devices) {
 		if (err) {
 			return callback(err);
 		}
-		Q.each(devices, function (i) {
-			if (filter && filter(this) === false) {
-				return;
-			}
-			this.pushNotification(
-				isArrayLike ? notifications[this.fields.userId] : notifications,
-				options
-			);
+		devices.forEach(function (device, i) {
+			var notification = {
+				alert: {
+					title: 'Hello ' + device.fields.platform,
+					body: 'from Qbix'
+				},
+				badge: 'https://cdn4.iconfinder.com/data/icons/google-i-o-2016/512/google_firebase-128.png',
+				url: 'https://google.com'
+			};
+			setTimeout(function () {
+				device.handlePushNotification(notification, function (err, response) {
+					if (err) {
+						console.log("Something has gone wrong!");
+					} else {
+						console.log("Successfully sent with response: ", response);
+					}
+				});
+			}, i * 3000);
 		});
 
 	});
 
-
-	var connection = Db.getConnection("Teaching");
-	//var row = Db.Row('id');
-
-	//Db.
-	Db.on('query', function (query, sql, client) {
-		if (query.clauses.BEGIN) {
-			Q.log('BEGIN', 'sql');
-		}
-		Q.log(sql, 'sql');
-		if (query.clauses.COMMIT) {
-			Q.log('COMMIT', 'sql');
-		}
-		if (query.clauses.ROLLBACK) {
-			Q.log('ROLLBACK', 'sql');
-		}
-	});
-	
 });

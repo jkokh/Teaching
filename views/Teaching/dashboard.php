@@ -30,12 +30,13 @@
 		'tabs' => array(
 			'welcome' => 'Welcome',
 			'about' => 'About',
-			'messaging' => 'Messaging'
+			'webpush' => 'Web Push'
 		),
 		'urls' => array(
 			'welcome' => 'Teaching/welcome',
 			'about' => 'Teaching/about',
-			'messaging' => 'Teaching/messaging'
+			'messaging' => 'Teaching/messaging',
+			'webpush' => 'Teaching/webpush'
 		)
 	))?>
 </div>
