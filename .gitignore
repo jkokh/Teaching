@@ -13,3 +13,5 @@ web/uploads
 !*.dir
 
 web/send-notification-curl.txt
+tmp/
+QbixCertificate.*
