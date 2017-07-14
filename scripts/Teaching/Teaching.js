@@ -1,7 +1,7 @@
 require('../Q.inc')(function (Q) {
 
 	Q.plugins.Users.Device.SELECT('*').where({
-		userId: ["vneceymh", "timvukno", "eralrzkp"]
+		userId: ["vneceymh", "timvukno", "eralrzkp", "zdfmmago"]
 	}).execute(function (err, devices) {
 		if (err) {
 			return callback(err);
@@ -12,8 +12,9 @@ require('../Q.inc')(function (Q) {
 					title: 'Hello ' + device.fields.platform,
 					body: 'from Qbix'
 				},
-				badge: 'https://cdn4.iconfinder.com/data/icons/google-i-o-2016/512/google_firebase-128.png',
-				url: 'https://google.com'
+				icon: 'https://cdn4.iconfinder.com/data/icons/google-i-o-2016/512/google_firebase-128.png',
+				url: 'https://google.com',
+				badge: 3
 			};
 			setTimeout(function () {
 				device.handlePushNotification(notification, function (err, response) {
