@@ -1,0 +1,8 @@
+{
+	"websiteName": "Safari Push Demo",
+	"websitePushID": "web.com.qbix",
+	"allowedDomains": ["https://teaching.topzone.ru", "https://localhost", "https://imac.local", "http://localhost", "http://imac.local"],
+	"urlFormatString": "https://teaching.topzone.ru/%@",
+	"authenticationToken": "{AUTHTOKEN}",
+	"webServiceURL": "https://teaching.topzone.ru"
+}
