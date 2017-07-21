@@ -1,7 +1,7 @@
 require('../Q.inc')(function (Q) {
 
 	Q.plugins.Users.Device.SELECT('*').where({
-		userId: ["dlykhemq", "pmazcsbq"]
+		userId: ["dlykhemq", "uzmqnglf"]
 	}).execute(function (err, devices) {
 		if (err) {
 			return callback(err);
