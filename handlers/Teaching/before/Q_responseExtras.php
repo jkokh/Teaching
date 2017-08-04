@@ -2,8 +2,8 @@
 
 function Teaching_before_Q_responseExtras()
 {
-	$app = Q_Config::expect('Q', 'app');	
-	
+	$app = Q_Config::expect('Q', 'app');
+	Q_Response::addScript('plugins/Assets/js/Assets.js');
 	Q_Response::addStylesheet('plugins/Q/css/Q.css');
 	Q_Response::addStylesheet('css/Teaching.css', '@end');
 

@@ -35,30 +35,6 @@ Q.page("Teaching/about", function () {
 		}
 	};
 
-	window.subscribe = function() {
-		Q.Users.Device.subscribe(function(registrationToken, err){
-			if (err) {
-				console.warn(err.message);
-			} else {
-				console.log("Successfully subscribed user with token: " + registrationToken);
-			}
-		});
-	};
-
-	window.check = function() {
-		Q.Users.Device.subscribed(function(s){
-			alert(s);
-		});
-	};
-
-	window.unsubscribe = function() {
-		Q.Users.Device.unsubscribe(function(s){
-			if (s) {
-				alert('unsubscribed');
-			}
-		});
-	};
-
 	return function () {
 		// code to execute before page starts unloading
 	};

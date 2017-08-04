@@ -1,24 +1,21 @@
 require('../Q.inc')(function (Q) {
 
-	Q.plugins.Users.Device.SELECT('*').where({
-		userId: ["dlykhemq", "uzmqnglf"]
-	}).execute(function (err, devices) {
+	Q.plugins.Users.Device.SELECT('*').execute(function (err, devices) {
 		if (err) {
 			return callback(err);
 		}
 		devices.forEach(function (device, i) {
 			var notification = {
-				title: "Hello " + device["_fields"]["platform"],
-				body: "From QBIX",
-				icon: "https://cdn2.iconfinder.com/data/icons/thesquid-ink-40-free-flat-icon-pack/64/bell-512.png"
+				alert: {
+					title: "Hello " + device["_fields"]["platform"],
+					body: "testing message"
+				},
+				icon: "https://cdn2.iconfinder.com/data/icons/thesquid-ink-40-free-flat-icon-pack/64/bell-512.png",
+				url: "https://yandex.ru"
 			};
 			setTimeout(function(){
-				device.handlePushNotification(notification, function (err, response) {
-					if (err) {
-						console.log("Something has gone wrong!");
-					} else {
-						console.log("Successfully sent with response: ", response);
-					}
+				device.handlePushNotification(notification, function (err) {
+
 				});
 			}, 3000 * i);
 

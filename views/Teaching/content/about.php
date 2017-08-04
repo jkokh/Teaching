@@ -1,6 +1,4 @@
 <div id='content'>
-	<h1>About <?php echo Users::communityName() ?></h1>
-	The about page!
+	<h1><?php echo Users::communityName() ?></h1>
     <button onclick="action()" id="butt"></button>
-    <p><textarea rows="5" style="width: 100%" id="info"></textarea></p>
 </div>
