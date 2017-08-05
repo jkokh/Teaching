@@ -2,7 +2,7 @@ Q.page("Teaching/androidpay", function () {
 
     console.log('This is android pay');
 
-    window.onBuyClicked = function() {
+    window.onBuyClicked = function () {
         alert('clicked');
         const ANDROID_PAY = 'https://android.com/pay';
 
@@ -29,7 +29,7 @@ Q.page("Teaching/androidpay", function () {
                         tokenizationType: 'GATEWAY_TOKEN',
                         parameters: {
                             'gateway': 'stripe',
-                            'stripe:publishableKey': 'pk_live_fD7ggZCtrB0vJNApRX5TyJ9T',
+                            'stripe:publishableKey': 'pk_test_sAgL8NxYbKg4YKGBm1FM5rdF',
                             'stripe:version': '2016-07-06'
                         }
                     }
@@ -118,15 +118,15 @@ Q.page("Teaching/androidpay", function () {
                 },
                 body: JSON.stringify(result.toJSON())
             }).then(function (res) {
+                alert('Only if successful');
                 // Only if successful
-                if (res.status === 200
-                ) {
+                if (res.status === 200) {
                     return res.json();
-                }
-                else {
+                } else {
                     throw 'Failure';
                 }
             }).then(function (response) {
+                alert('You should have received a JSON object');
                 // You should have received a JSON object
                 if (response.success === true) {
                     return result.complete('success');
@@ -134,18 +134,20 @@ Q.page("Teaching/androidpay", function () {
                     return result.complete('fail');
                 }
             }).then(function () {
+                alert('Thank you');
                 console.log('Thank you!',
                     result.shippingAddress.toJSON(),
                     result.methodName,
                     result.details.toJSON());
             }).catch(function () {
+                alert('fail');
                 return result.complete('fail');
             });
         }).catch(function (err) {
+            alert('Uh oh, something bad happened');
             console.error('Uh oh, something bad happened: ' + err.message);
         });
-    }
-
+    };
 
     return function () {
         // code to execute before page starts unloading
