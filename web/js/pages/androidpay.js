@@ -1,120 +1,162 @@
 Q.page("Teaching/androidpay", function () {
 
-	console.log('This is android pay');
+    console.log('This is android pay');
 
-    /**
-     * Builds PaymentRequest for Android Pay, but does not show any UI yet. If you
-     * encounter issues when running your own copy of this sample, run 'adb logcat |
-     * grep Walvar' to see detailed error messages.
-     *
-     * @return {PaymentRequest} The PaymentRequest object.
-     */
-    function initPaymentRequest() {
-        var supportedInstruments = [{
-            supportedMethods: ['https://android.com/pay'],
-            data: {
-                merchantName: 'Android Pay Demo',
-                environment: 'TEST',
-                allowedCardNetworks: ['AMEX', 'DISCOVER', 'MASTERCARD', 'VISA'],
-                paymentMethodTokenizationParameters: {
-                    tokenizationType: 'GATEWAY_TOKEN',
-                    parameters: {
-                        'gateway': 'stripe',
-                        // Place your own Stripe publishable key here. Use a matching Stripe
-                        // secret key on the server to initiate a transaction.
-                        'stripe:publishableKey': 'pk_test_sAgL8NxYbKg4YKGBm1FM5rdF',
-                        'stripe:version': '2016-07-06'
+    function onBuyClicked() {
+        const ANDROID_PAY = 'https://android.com/pay';
+
+        if (!window.PaymentRequest) {
+            // PaymentRequest API is not available. Forwarding to
+            // legacy form based experience.
+            location.href = '/checkout';
+            return;
+        }
+
+        var supportedInstruments = [
+            {
+                supportedMethods: ['basic-card'],
+                data: {
+                    supportedNetworks: ['amex', 'discover', 'mastercard', 'visa'],
+                    supportedTypes: ['credit']
+                }
+            },
+            {
+                supportedMethods: [ANDROID_PAY],
+                data: {
+                    merchantId: '02510116604241796260',
+                    environment: 'TEST',
+                    allowedCardNetwork: ['AMEX', 'MASTERCARD', 'VISA', 'DISCOVER'],
+                    paymentMethodTokenizationParameters: {
+                        tokenizationType: 'GATEWAY_TOKEN',
+                        parameters: {
+                            'gateway': 'stripe',
+                            'stripe:publishableKey': 'pk_live_fD7ggZCtrB0vJNApRX5TyJ9T',
+                            'stripe:version': '2016-07-06'
+                        }
                     }
                 }
             }
-        }];
+        ];
 
         var details = {
-            total: {label: 'Donation', amount: {currency: 'USD', value: '55.00'}},
-            displayItems: [
-                {
-                    label: 'Original donation amount',
-                    amount: {currency: 'USD', value: '65.00'},
-                },
-                {
-                    label: 'Friends and family discount',
-                    amount: {currency: 'USD', value: '-10.00'},
-                },
-            ],
+            displayItems: [{
+                label: 'Original donation amount',
+                amount: {currency: 'USD', value: '65.00'}
+            }, {
+                label: 'Friends and family discount',
+                amount: {currency: 'USD', value: '-10.00'}
+            }],
+            total: {
+                label: 'Total due',
+                amount: {currency: 'USD', value: '55.00'}
+            }
         };
 
-        return new PaymentRequest(supportedInstruments, details);
-    }
+        var options = {
+            requestShipping: true,
+            requestPayerEmail: true,
+            requestPayerPhone: true,
+            requestPayerName: true
+        };
 
-    /**
-     * Invokes PaymentRequest for Android Pay.
-     *
-     * @param {PaymentRequest} request The PaymentRequest object.
-     */
-    function onBuyClicked(request) {
-        request.show().then(function(instrumentResponse) {
-            sendPaymentToServer(instrumentResponse);
-        })
-            .catch(function(err) {
-                ChromeSamples.setStatus(err);
-            });
-    }
+        // Initialization
+        var request = new PaymentRequest(supportedInstruments, details, options);
 
-    /**
-     * Simulates processing the payment data on the server.
-     *
-     * @param {PaymentResponse} instrumentResponse The payment information to
-     * process.
-     */
-    function sendPaymentToServer(instrumentResponse) {
-        // There's no server-side component of these samples. No transactions are
-        // processed and no money exchanged hands. Instantaneous transactions are not
-        // realistic. Add a 2 second delay to make it seem more real.
-        window.setTimeout(function() {
-            instrumentResponse.compvare('success')
-                .then(function() {
-                    document.getElementById('result').innerHTML =
-                        instrumentToJsonString(instrumentResponse);
+        // When user selects a shipping address
+        request.addEventListener('shippingaddresschange', function (e) {
+            e.updateWith((function (details, addr) {
+                    var shippingOption = {
+                        id: '',
+                        label: '',
+                        amount: {currency: 'USD', value: '0.00'},
+                        selected: true
+                    };
+                    // Shipping to US is supported
+                    if (addr.country === 'US') {
+                        shippingOption.id = 'us';
+                        shippingOption.label = 'Standard shipping in US';
+                        shippingOption.amount.value = '0.00';
+                        details.total.amount.value = '55.00';
+                        // Shipping to JP is supported
+                    } else if (addr.country === 'JP') {
+                        shippingOption.id = 'jp';
+                        shippingOption.label = 'International shipping';
+                        shippingOption.amount.value = '10.00';
+                        details.total.amount.value = '65.00';
+                        // Shipping to elsewhere is unsupported
+                    } else {
+                        // Empty array indicates rejection of the address
+                        details.shippingOptions = [];
+                        return Promise.resolve(details);
+                    }
+                    // Hardcode for simplicity
+                    if (details.displayItems.length === 2) {
+                        details.displayItems[2] = shippingOption;
+                    } else {
+                        details.displayItems.push(shippingOption);
+                    }
+                    details.shippingOptions = [shippingOption];
+
+                    return Promise.resolve(details);
                 })
-                .catch(function(err) {
-                    ChromeSamples.setStatus(err);
-                });
-        }, 2000);
-    }
-
-    /**
-     * Converts the payment instrument into a JSON string.
-     *
-     * @param {PaymentResponse} instrument The instrument to convert.
-     * @return {string} The JSON string representation of the instrument.
-     */
-    function instrumentToJsonString(instrument) {
-        if (instrument.toJSON) {
-            return JSON.stringify(instrument, undefined, 2);
-        } else {
-            return JSON.stringify({
-                methodName: instrument.methodName,
-                details: instrument.details,
-            }, undefined, 2);
-        }
-    }
-
-    const payButton = document.getElementById('buyButton');
-    payButton.setAttribute('style', 'display: none;');
-    if (window.PaymentRequest) {
-        var request = initPaymentRequest();
-        payButton.setAttribute('style', 'display: inline;');
-        payButton.addEventListener('click', function() {
-            onBuyClicked(request);
-            request = initPaymentRequest();
+                (details, request.shippingAddress)
+            );
         });
-    } else {
-        console.log('This browser does not support web payments');
+
+        // When user selects a shipping option
+        request.addEventListener('shippingoptionchange', function (e) {
+            e.updateWith((function (details) {
+                    // There should be only one option. Do nothing.
+                    return Promise.resolve(details);
+                })
+                (details)
+            );
+        });
+
+        // Show UI then continue with user payment info
+        request.show().then(function (result) {
+            // POST the result to the server
+            return fetch('/pay', {
+                method: 'POST',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(result.toJSON())
+            }).then(function (res) {
+                // Only if successful
+                if (res.status === 200
+                ) {
+                    return res.json();
+                }
+                else {
+                    throw 'Failure';
+                }
+            }).then(function (response) {
+                // You should have received a JSON object
+                if (response.success === true) {
+                    return result.complete('success');
+                } else {
+                    return result.complete('fail');
+                }
+            }).then(function () {
+                console.log('Thank you!',
+                    result.shippingAddress.toJSON(),
+                    result.methodName,
+                    result.details.toJSON());
+            }).catch(function () {
+                return result.complete('fail');
+            });
+        }).catch(function (err) {
+            console.error('Uh oh, something bad happened: ' + err.message);
+        });
     }
-	
-	return function () {
-		// code to execute before page starts unloading
-	};
+
+    document.querySelector('#start').addEventListener('click', onBuyClicked);
+
+    return function () {
+        // code to execute before page starts unloading
+    };
 
 }, 'Teaching');
 
