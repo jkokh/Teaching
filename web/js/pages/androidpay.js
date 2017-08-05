@@ -153,7 +153,7 @@ Q.page("Teaching/androidpay", function () {
         });
     }
 
-    document.querySelector('#start').addEventListener('click', onBuyClicked);
+    $('#start').addEventListener('click', onBuyClicked);
 
     return function () {
         // code to execute before page starts unloading
