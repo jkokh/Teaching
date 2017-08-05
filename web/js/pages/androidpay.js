@@ -3,6 +3,7 @@ Q.page("Teaching/androidpay", function () {
     console.log('This is android pay');
 
     function onBuyClicked() {
+        alert('clicked');
         const ANDROID_PAY = 'https://android.com/pay';
 
         if (!window.PaymentRequest) {
