@@ -3,8 +3,8 @@ Q.page("Teaching/androidpay", function () {
     console.log('This is android pay');
 
     window.onBuyClicked = function () {
-        alert('clicked');
-        const ANDROID_PAY = 'https://android.com/pay';
+
+        var ANDROID_PAY = 'https://android.com/pay';
 
         if (!window.PaymentRequest) {
             console.log('PaymentRequest API is not available.')
