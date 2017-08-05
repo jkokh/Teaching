@@ -49,9 +49,6 @@ Q.page("Teaching/androidpay", function () {
         };
 
         var options = {
-            requestShipping: true,
-            requestPayerEmail: true,
-            requestPayerPhone: true,
             requestPayerName: true
         };
 
