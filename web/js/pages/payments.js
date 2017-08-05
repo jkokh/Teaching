@@ -1,10 +1,16 @@
 Q.page("Teaching/payments", function () {
 
 
+/*
 	var stripe = Stripe('pk_test_sAgL8NxYbKg4YKGBm1FM5rdF');
 
+	Q.Assets.Payments.stripe({
+		amount: 10
+	});
+*/
 
-	window.pay = function () {
+
+	/*window.pay = function () {
 		console.log(window.PaymentRequest)
 		Q.Assets.Payments.pay()
 	};
@@ -65,7 +71,7 @@ Q.page("Teaching/payments", function () {
 
 	}
 	document.querySelector('#pay').addEventListener('click', onBuyClicked);
-
+*/
 	return function () {
 		// code to execute before page starts unloading
 	};

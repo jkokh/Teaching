@@ -16,7 +16,7 @@
 			},
 			"connections": []
 		},
-		"plugins": ["Users", "Streams"],
+		"plugins": ["Users", "Streams", "Assets"],
 		"handlersBeforeEvent": {
 			"Q/responseExtras": ["Teaching/before/Q_responseExtras"]
 		},

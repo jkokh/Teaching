@@ -31,14 +31,16 @@
 			'welcome' => 'Welcome',
 			'about' => 'About',
 			'webpush' => 'Web Push',
-			'payments' => 'Payments'
+			'payments' => 'Payments',
+			'androidpay' => 'Android Pay'
 		),
 		'urls' => array(
 			'welcome' => 'Teaching/welcome',
 			'about' => 'Teaching/about',
 			'messaging' => 'Teaching/messaging',
 			'webpush' => 'Teaching/webpush',
-			'payments' => 'Teaching/payments'
+			'payments' => 'Teaching/payments',
+			'androidpay' => 'Teaching/androidpay'
 		)
 	))?>
 </div>
