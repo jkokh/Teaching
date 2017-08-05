@@ -2,14 +2,12 @@ Q.page("Teaching/androidpay", function () {
 
     console.log('This is android pay');
 
-    function onBuyClicked() {
+    window.onBuyClicked = function() {
         alert('clicked');
         const ANDROID_PAY = 'https://android.com/pay';
 
         if (!window.PaymentRequest) {
-            // PaymentRequest API is not available. Forwarding to
-            // legacy form based experience.
-            location.href = '/checkout';
+            console.log('PaymentRequest API is not available.')
             return;
         }
 
@@ -153,7 +151,6 @@ Q.page("Teaching/androidpay", function () {
         });
     }
 
-    $('#start').addEventListener('click', onBuyClicked);
 
     return function () {
         // code to execute before page starts unloading
