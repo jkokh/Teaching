@@ -108,6 +108,7 @@ Q.page("Teaching/androidpay", function () {
 
         // Show UI then continue with user payment info
         request.show().then(function (result) {
+            alert(JSON.stringify(result));
             // POST the result to the server
             return fetch('/pay', {
                 method: 'POST',
