@@ -40,14 +40,11 @@ Q.page("Teaching/androidpay", function () {
         var details = {
             displayItems: [{
                 label: 'Original donation amount',
-                amount: {currency: 'USD', value: '65.00'}
-            }, {
-                label: 'Friends and family discount',
-                amount: {currency: 'USD', value: '-10.00'}
+                amount: {currency: 'USD', value: '0.01'}
             }],
             total: {
                 label: 'Total due',
-                amount: {currency: 'USD', value: '55.00'}
+                amount: {currency: 'USD', value: '0.01'}
             }
         };
 
@@ -75,13 +72,13 @@ Q.page("Teaching/androidpay", function () {
                         shippingOption.id = 'us';
                         shippingOption.label = 'Standard shipping in US';
                         shippingOption.amount.value = '0.00';
-                        details.total.amount.value = '55.00';
+                        details.total.amount.value = '0.00';
                         // Shipping to JP is supported
                     } else if (addr.country === 'JP') {
                         shippingOption.id = 'jp';
                         shippingOption.label = 'International shipping';
-                        shippingOption.amount.value = '10.00';
-                        details.total.amount.value = '65.00';
+                        shippingOption.amount.value = '0.00';
+                        details.total.amount.value = '0.00';
                         // Shipping to elsewhere is unsupported
                     } else {
                         // Empty array indicates rejection of the address
